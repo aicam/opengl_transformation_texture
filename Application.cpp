@@ -23,10 +23,6 @@ bool wired = false;
 unsigned int VBO, VAO, EBO;
 
 float vertices[] = {
-//        -0.5f, -0.5f, 0.0f, 0.0f, // 0
-//        0.5f, -0.5f, 1.0f, 0.0f, // 1
-//        0.5f,  0.5f, 1.0f, 1.0f, // 2
-//        -0.5f,  0.5f, 0.0f, 1.0f  // 3
         // positions          // colors           // texture coords
         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
@@ -177,8 +173,11 @@ int main( void )
             VertexBuffer vb(vertices, 8 * 4 * sizeof(float));
             IndexBuffer ib(indices, 6);
             VertexBufferLayout layout;
+            // position
             layout.AddFloat(3);
+            // color
             layout.AddFloat(3);
+            // text coord
             layout.AddFloat(2);
 
             va.AddBuffer(vb, layout);
