@@ -1,25 +1,28 @@
 // Include GLEW
 #include <GL/glew.h>
-
 // Include GLFW
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+// glm library
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-#include "VertexBuffer.h"
-#include "VertexArray.h"
-#include "IndexBuffer.h"
-#include "Shader.h"
-#include "Renderer.h"
-#include "Texture.h"
+#include "libs/Transformation.h"
+#include "libs/VertexBuffer.h"
+#include "libs/VertexArray.h"
+#include "libs/IndexBuffer.h"
+#include "libs/Shader.h"
+#include "libs/Renderer.h"
+#include "libs/Texture.h"
 // here junks
 
 unsigned int SCR_WIDTH = 800;
 unsigned int SCR_HEIGHT = 600;
-
+glm::mat4 transformation = glm::mat4(1.0f);
 short selectedIndex = -1;
 bool wired = false;
-
+Transformation transformationClass;
 unsigned int VBO, VAO, EBO;
 
 float vertices[] = {
@@ -41,8 +44,8 @@ void processInput(GLFWwindow *window) {
     float xpos = ((float) xposd / SCR_WIDTH) * 2 - 1;
     float ypos = -(((float) yposd / SCR_HEIGHT) * 2 - 1);
 
-    vertices[selectedIndex * 4] = xpos;
-    vertices[selectedIndex * 4 + 1] = ypos;
+    vertices[selectedIndex * (sizeof(vertices) / (sizeof(float) * 4))] = xpos;
+    vertices[selectedIndex * (sizeof(vertices) / (sizeof(float) * 4)) + 1] = ypos;
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
@@ -66,7 +69,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
         }
         wired = !wired;
     }
-
+    transformationClass.pressedKey(key);
 }
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
@@ -85,7 +88,7 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 
     selectedIndex = -1;
     for (int i = 0; i < 4; i++) {
-        float x = vertices[i * 4], y = vertices[(i * 4) + 1];
+        float x = vertices[i * (sizeof(vertices) / (sizeof(float) * 4))], y = vertices[(i * (sizeof(vertices) / (sizeof(float) * 4))) + 1];
         if (std::abs(x - xpos) < thresh && std::abs(y - ypos) < thresh) {
             selectedIndex = i;
 //            std::cout << xpos << " " << ypos << " | " << x << " " << y << " " << selectedIndex << std::endl;
@@ -163,13 +166,15 @@ int main( void )
         Shader shader("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/shaders/Basic.shader");
         shader.Bind();
 
-        Texture texture("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/textures/background.png");
+        Texture texture("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/textures/game.jpeg");
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
-
         Renderer renderer;
-
+        int r = 0;
+        float angel = 0.0f;
         do {
+            transformation = transformationClass.transform(transformation, vertices);
+            shader.SetUniformMat4f("MVP", transformation);
             VertexBuffer vb(vertices, 8 * 4 * sizeof(float));
             IndexBuffer ib(indices, 6);
             VertexBufferLayout layout;

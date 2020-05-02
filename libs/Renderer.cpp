@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include <iostream>
 
 void Renderer::Clear() const
 {

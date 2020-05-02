@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <glm/detail/type_mat.hpp>
 
 struct ShaderProgramSource
 {
@@ -27,6 +28,7 @@ class Shader
         void SetUniform1i(const std::string& name, int value);
         void SetUniform1f(const std::string& name, float value);
         void SetUniform4f(const std::string& name, float f0, float f1, float f2, float f3);
+        void SetUniformMat4f(const std::string& name, glm::mat4 matrix);
 
     private:
         int GetUniformLocation(const std::string& name);

@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <glm/detail/type_mat4x4.hpp>
 
 Shader::Shader(const std::string& filepath)
     : m_FilePath(filepath), m_RendererID(0)
@@ -57,6 +58,10 @@ void Shader::SetUniform1f(const std::string& name, float value)
 void Shader::SetUniform4f(const std::string& name, float f0, float f1, float f2, float f3)
 {
     GLCall( glUniform4f(GetUniformLocation(name), f0, f1, f2, f3) );
+}
+
+void Shader::SetUniformMat4f(const std::string &name, glm::mat4 matrix) {
+    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
 }
 
 enum ShaderType

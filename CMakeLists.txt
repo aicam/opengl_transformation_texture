@@ -10,6 +10,6 @@ endif(NOT OPENGL_FOUND)
 set(GL_LIBRARY GL GLU X11)
 set(MESA_GL_VERSION_OVERRIDE "310")
 set(MESA_GLSL_VERSION_OVERRIDE "310")
-add_executable(ep17-textures Application.cpp VertexArray.cpp VertexBuffer.cpp IndexBuffer.cpp Shader.cpp Texture.cpp Renderer.cpp vendor/stb_image/stb_image.cpp)
+add_executable(ep17-textures Application.cpp libs/VertexArray.cpp libs/VertexBuffer.cpp libs/IndexBuffer.cpp libs/Shader.cpp libs/Texture.cpp libs/Renderer.cpp vendor/stb_image/stb_image.cpp libs/Transformation.cpp libs/Transformation.h)
 target_link_libraries(ep17-textures glfw GLEW libGLEW.so libGLU.so libGL.so)
 
