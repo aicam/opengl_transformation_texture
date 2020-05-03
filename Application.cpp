@@ -170,8 +170,6 @@ int main( void )
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
         Renderer renderer;
-        int r = 0;
-        float angel = 0.0f;
         IndexBuffer ib(indices, 6);
         VertexBufferLayout layout;
         // position
