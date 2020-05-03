@@ -116,7 +116,7 @@ GLFWwindow* InitWindow()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    GLFWwindow* window = glfwCreateWindow( 1024, 768, "Tutorial 02 - Red triangle", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow( 1024, 768, "HW2", NULL, NULL);
     if( window == NULL ){
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         getchar();
@@ -166,25 +166,24 @@ int main( void )
         Shader shader("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/shaders/Basic.shader");
         shader.Bind();
 
-        Texture texture("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/textures/game.jpeg");
+        Texture texture("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/textures/background.png");
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
         Renderer renderer;
         int r = 0;
         float angel = 0.0f;
+        IndexBuffer ib(indices, 6);
+        VertexBufferLayout layout;
+        // position
+        layout.AddFloat(3);
+        // color
+        layout.AddFloat(3);
+        // text coord
+        layout.AddFloat(2);
         do {
             transformation = transformationClass.transform(transformation, vertices);
             shader.SetUniformMat4f("MVP", transformation);
             VertexBuffer vb(vertices, 8 * 4 * sizeof(float));
-            IndexBuffer ib(indices, 6);
-            VertexBufferLayout layout;
-            // position
-            layout.AddFloat(3);
-            // color
-            layout.AddFloat(3);
-            // text coord
-            layout.AddFloat(2);
-
             va.AddBuffer(vb, layout);
             processInput(window);
             renderer.Clear();

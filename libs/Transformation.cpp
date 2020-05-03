@@ -44,17 +44,17 @@ glm::mat4 Transformation::transform(glm::mat4 &transformation, float vertices[32
         transformation = glm::scale(transformation, glm::vec3(1.001, 1.0, 1.0));
     if (now - QPressedTime < 3) {
         for (int i = 0; i < 4; i++){
-            vertices[8*i + 3] = ((float) rand() / (RAND_MAX)) + 1;
-            vertices[8*i + 4] = ((float) rand() / (RAND_MAX)) + 1;
-            vertices[8*i + 5] = ((float) rand() / (RAND_MAX)) + 1;
+            vertices[8*i + 3] = ((float) rand() / (RAND_MAX));
+            vertices[8*i + 4] = ((float) rand() / (RAND_MAX));
+            vertices[8*i + 5] = ((float) rand() / (RAND_MAX));
         }
         transformation = glm::rotate(transformation, 0.01f, glm::vec3(0.0, 0.0, 1.0));
     }
     if (now - EPressedTime < 3) {
         for (int i = 0; i < 4; i++){
-            vertices[8*i + 3] = ((float) rand() / (RAND_MAX)) + 1;
-            vertices[8*i + 4] = ((float) rand() / (RAND_MAX)) + 1;
-            vertices[8*i + 5] = ((float) rand() / (RAND_MAX)) + 1;
+            vertices[8*i + 3] = ((float) rand() / (RAND_MAX));
+            vertices[8*i + 4] = ((float) rand() / (RAND_MAX));
+            vertices[8*i + 5] = ((float) rand() / (RAND_MAX));
         }
         transformation = glm::rotate(transformation, -0.01f, glm::vec3(0.0, 0.0, 1.0));
     }
