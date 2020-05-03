@@ -163,10 +163,10 @@ int main( void )
         VertexArray va;
 
 
-        Shader shader("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/shaders/Basic.shader");
+        Shader shader("res/shaders/Basic.shader");
         shader.Bind();
 
-        Texture texture("/home/ali/CLionProjects/thecherno_opengl/ep17-textures/res/textures/background.png");
+        Texture texture("res/textures/background.png");
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
         Renderer renderer;
